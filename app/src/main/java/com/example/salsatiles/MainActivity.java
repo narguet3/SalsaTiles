@@ -160,8 +160,8 @@ public class MainActivity extends AppCompatActivity implements OnAntEventListene
 
             //light tiles for user to organize correctly
             connection.setTileColor(LED_COLOR_RED, topTile);
-            connection.setTileColor(LED_COLOR_VIOLET, secondTop);
-            connection.setTileColor(LED_COLOR_BLUE, thirdTop);
+            connection.setTileColor(LED_COLOR_BLUE, secondTop);
+            connection.setTileColor(LED_COLOR_VIOLET, thirdTop);
             connection.setTileColor(LED_COLOR_GREEN, bottomTile);
         }
 
