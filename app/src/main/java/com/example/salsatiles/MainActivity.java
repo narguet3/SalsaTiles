@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements OnAntEventListene
             public void onClick(View view)
             {
                 setUpTiles();
-
+                connection.unregisterListener(MainActivity.this);
+                Intent intent = new Intent (MainActivity.this, setupGame.class);
+                startActivity(intent);
             }
         });
 
