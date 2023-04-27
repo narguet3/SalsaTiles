@@ -16,10 +16,14 @@ import com.livelife.motolibrary.MotoSound;
 
 public class setupGame extends AppCompatActivity implements OnAntEventListener {
 
+    TextView tileSetupText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_game);
+
+        tileSetupText.setText(String.valueOf("Orient the tile according to the image below"));
+
     }
 
     @Override

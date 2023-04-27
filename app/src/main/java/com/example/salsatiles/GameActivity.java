@@ -34,8 +34,6 @@ public class GameActivity extends AppCompatActivity implements OnAntEventListene
 
     int rounds = 7;
 
-    // HashMap with string names of colors
-    HashMap<Integer, String> colorNames = new HashMap<Integer, String>();
     @Override
     public void onBackPressed() {
         super.onBackPressed();
