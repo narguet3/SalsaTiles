@@ -45,12 +45,6 @@ public class GameActivity extends AppCompatActivity implements OnAntEventListene
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        colorNames.put(1, "Red");
-        colorNames.put(6, "White");
-        colorNames.put(5, "Orange");
-        colorNames.put(7, "Violet");
-        colorNames.put(3, "Green");
-        colorNames.put(4, "Indigo");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);

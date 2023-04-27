@@ -74,30 +74,6 @@ public class SalsaLogic extends Game
     }
 
 
-    public void setUpTiles() {
-        ArrayList<Integer> connectedTiles = motoConnection.connectedTiles;
-        int topTile;
-        int secondTop;
-        int thirdTop;
-        int bottomTile;
-
-        //Assume 4 tiles are connect
-        if (connectedTiles.size() != 4) {
-            motoConnection.setAllTilesBlink(5, LED_COLOR_RED);
-        } else {
-            topTile = connectedTiles.get(0);
-            secondTop = connectedTiles.get(1);
-            thirdTop = connectedTiles.get(2);
-            bottomTile = connectedTiles.get(3);
-
-            //light tiles for user to organize correctly
-            motoConnection.setTileColor(LED_COLOR_RED, topTile);
-            motoConnection.setTileColor(LED_COLOR_VIOLET, secondTop);
-            motoConnection.setTileColor(LED_COLOR_BLUE, thirdTop);
-            motoConnection.setTileColor(LED_COLOR_GREEN, bottomTile);
-        }
-
-    }
 
     @Override
     public void onGameEnd() {

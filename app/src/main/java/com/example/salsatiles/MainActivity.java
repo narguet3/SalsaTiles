@@ -1,20 +1,9 @@
 package com.example.salsatiles;
 
-// What Nic had there
-//import android.os.Bundle;
-//
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//public class MainActivity extends AppCompatActivity {
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//    }
-//}
-
-// Main Activity basic skeleton
+import static com.livelife.motolibrary.AntData.LED_COLOR_BLUE;
+import static com.livelife.motolibrary.AntData.LED_COLOR_GREEN;
+import static com.livelife.motolibrary.AntData.LED_COLOR_RED;
+import static com.livelife.motolibrary.AntData.LED_COLOR_VIOLET;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,10 +16,12 @@ import android.widget.TextView;
 import com.livelife.motolibrary.MotoConnection;
 import com.livelife.motolibrary.OnAntEventListener;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements OnAntEventListener
 {
     MotoConnection connection;
-    Button pairingButton, startGameButton;
+    Button pairingButton, startGameButton, setupButton;
     TextView statusTextView; // To display the number of tiles connected
     boolean is_pairing = false;
 
@@ -50,17 +41,6 @@ public class MainActivity extends AppCompatActivity implements OnAntEventListene
         pairingButton = findViewById(R.id.pairingButton);
         startGameButton = findViewById(R.id.startGameButton);
 
-        startGameButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                connection.unregisterListener(MainActivity.this);
-                Intent i = new Intent(MainActivity.this, GameActivity.class);
-                startActivity(i);
-            }
-        });
-
         pairingButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -77,6 +57,27 @@ public class MainActivity extends AppCompatActivity implements OnAntEventListene
                     pairingButton.setText("Start Paring");
                 }
                 is_pairing = !is_pairing;
+            }
+        });
+
+        setupButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                setUpTiles();
+
+            }
+        });
+
+        startGameButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                connection.unregisterListener(MainActivity.this);
+                Intent i = new Intent(MainActivity.this, GameActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -139,6 +140,30 @@ public class MainActivity extends AppCompatActivity implements OnAntEventListene
             }
         }
          */
+
+    }
+    public void setUpTiles() {
+        ArrayList<Integer> connectedTiles = connection.connectedTiles;
+        int topTile;
+        int secondTop;
+        int thirdTop;
+        int bottomTile;
+
+        //Assume 4 tiles are connect
+        if (connectedTiles.size() != 4) {
+            connection.setAllTilesBlink(5, LED_COLOR_RED);
+        } else {
+            topTile = connectedTiles.get(0);
+            secondTop = connectedTiles.get(1);
+            thirdTop = connectedTiles.get(2);
+            bottomTile = connectedTiles.get(3);
+
+            //light tiles for user to organize correctly
+            connection.setTileColor(LED_COLOR_RED, topTile);
+            connection.setTileColor(LED_COLOR_VIOLET, secondTop);
+            connection.setTileColor(LED_COLOR_BLUE, thirdTop);
+            connection.setTileColor(LED_COLOR_GREEN, bottomTile);
+        }
 
     }
 }
