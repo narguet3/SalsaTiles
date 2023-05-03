@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/statusTextView" />
     <Button
-        android:id="@+id/setupButton"
+        android:id="@+id/orientButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Orient the tiles!"
