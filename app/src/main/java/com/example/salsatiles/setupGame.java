@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.StaticLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,7 +27,9 @@ import java.util.ArrayList;
 public class setupGame extends AppCompatActivity implements OnAntEventListener {
 
     TextView tileSetupText;
-    ImageView gt_container;
+    SalsaLogic game_object = new SalsaLogic();
+    LinearLayout gt_container;
+    ImageView image_container;
     MotoConnection connection = MotoConnection.getInstance();
     Button startGameButton;
 
@@ -36,19 +39,35 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
         setUpTiles();
         //tileSetupText.setText(String.valueOf("Orient the tile according to the image below"));
         setContentView(R.layout.activity_setup_game);
-        startGameButton = findViewById(R.id.startButton);
-        gt_container = findViewById(R.id.setup_image);
+        //startGameButton = findViewById(R.id.startButton);
+        image_container = findViewById(R.id.setup_image);
+        gt_container = findViewById(R.id.game_type_container);
 
-        startGameButton.setOnClickListener(new View.OnClickListener()
+//        startGameButton.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                connection.unregisterListener(setupGame.this);
+//                Intent i = new Intent(setupGame.this, SalsaLogic.class);
+//                startActivity(i);
+//            }
+//        });
+        for (final GameType gt : game_object.getGameTypes())
         {
-            @Override
-            public void onClick(View v)
+            Button b = new Button(this);
+            b.setText(gt.getName());
+            b.setOnClickListener(new View.OnClickListener()
             {
-                connection.unregisterListener(setupGame.this);
-                Intent i = new Intent(setupGame.this, SalsaLogic.class);
-                startActivity(i);
-            }
-        });
+                @Override
+                public void onClick(View v)
+                {
+                    game_object.selectedGameType = gt;
+                    game_object.startGame();
+                }
+            });
+            gt_container.addView(b);
+        }
 
     }
 

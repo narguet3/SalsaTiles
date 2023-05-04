@@ -22,12 +22,23 @@ public class SalsaLogic extends Game
     final int BLINK = 2;
     int random_tile_id;
     int hitColor;
-    private ArrayList<Integer> colour_list = new ArrayList<>();
     public int r_color;
 
     SalsaLogic()
     {
-        setName("Hit The Color");
+        setName("Salsa Game");
+
+        GameType gt = new GameType(1, GameType.GAME_TYPE_TIME, 30,"Learn the Basic",1);
+        addGameType(gt);
+
+        GameType gt2 = new GameType(2, GameType.GAME_TYPE_TIME, 60,"Level 1: Basics",1);
+        addGameType(gt2);
+
+        GameType gt3 = new GameType(3, GameType.GAME_TYPE_TIME, 120,"Level 2: Basic + Turn",1);
+        addGameType(gt3);
+
+        GameType gt4 = new GameType(3, GameType.GAME_TYPE_TIME, 120,"Level 3: Follow Song",1);
+        addGameType(gt4);
 
 
     }
@@ -36,7 +47,12 @@ public class SalsaLogic extends Game
     public void onGameStart() {
 
         super.onGameStart();
-        motoConnection.setAllTilesIdle(LED_COLOR_OFF);
+        //motoConnection.setAllTilesIdle(LED_COLOR_OFF);
+
+        if (this.selectedGameType.getName() == "Learn the Basic") {
+            motoConnection.setAllTilesIdle(LED_COLOR_RED);
+
+        }
 
     }
 

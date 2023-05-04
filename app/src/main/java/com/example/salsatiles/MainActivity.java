@@ -62,17 +62,6 @@ public class MainActivity extends AppCompatActivity implements OnAntEventListene
                 startActivity(intent);
             }
         });
-
-//        startGameButton.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                connection.unregisterListener(MainActivity.this);
-//                Intent i = new Intent(MainActivity.this, GameActivity.class);
-//                startActivity(i);
-//            }
-//        });
     }
 
     @Override
