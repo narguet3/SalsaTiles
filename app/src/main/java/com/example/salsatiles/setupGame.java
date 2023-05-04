@@ -31,6 +31,10 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
     LinearLayout gt_container;
     ImageView image_container;
     MotoConnection connection = MotoConnection.getInstance();
+    public int topTile;
+    public int secondTop;
+    public int thirdTop;
+    public int bottomTile;
     Button startGameButton;
 
     @Override
@@ -87,10 +91,6 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
     }
     public void setUpTiles() {
         ArrayList<Integer> connectedTiles = connection.connectedTiles;
-        int topTile;
-        int secondTop;
-        int thirdTop;
-        int bottomTile;
 
         //Assume 4 tiles are connect
         if (connectedTiles.size() != 4) {
