@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,32 +10,33 @@
         android:id="@+id/tileSetupText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Orient the tile according to the image below"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.206" />
+        android:layout_centerInParent="true"
+        android:layout_marginTop="-200dp"
+        android:text="Orient the tile according to the image below" />
 
     <ImageView
         android:id="@+id/setup_image"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_below="@id/tileSetupText"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="0dp"
         app:srcCompat="@drawable/setup_image" />
 
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/game_type_container"
+        android:layout_below="@id/setup_image"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="608dp"
-        android:text="Start Game"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="22dp"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        tools:visibility="visible"
+        android:layout_centerInParent="true"
+        ></LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
