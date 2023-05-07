@@ -39,7 +39,8 @@ public class SalsaLogic extends Game
     public int thirdTop;
     public int bottomTile;
 
-    int counter = 0;
+    int fcounter = 0;
+    int bcounter = 0;
 
     SalsaLogic()
     {
