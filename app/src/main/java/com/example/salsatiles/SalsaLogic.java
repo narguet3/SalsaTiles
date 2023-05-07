@@ -26,13 +26,6 @@ public class SalsaLogic extends Game
 
     int GAME_SPEED = 5;
     boolean beginning_step = true;
-    boolean count0 = false;
-    boolean count1 = false;
-    boolean count2 = false;
-    boolean count3 = false;
-    boolean count4 = false;
-    boolean count5 = false;
-    boolean count6 = true;
 
     public int topTile;
     public int secondTop;
@@ -41,6 +34,8 @@ public class SalsaLogic extends Game
 
     int fcounter = 0;
     int bcounter = 0;
+    boolean forward;
+    boolean backward;
 
     SalsaLogic()
     {
@@ -57,6 +52,9 @@ public class SalsaLogic extends Game
 
         GameType gt4 = new GameType(4, GameType.GAME_TYPE_SPEED, 120,"Level 3: Follow Song",1);
         addGameType(gt4);
+
+        forward = true;
+        backward = false;
 
 
     }
@@ -228,90 +226,170 @@ public class SalsaLogic extends Game
 //                // ^^ because of what I said above the for loop idea is better? Or need to think of a better way to give points.
 //            }
 
-            System.out.println(counter % 6);
+            System.out.println(fcounter % 6);
 
-            // One - Right foot
-            if ( counter % 6 == 0) //Right foot - RED - follow
-            {
-                motoConnection.setTileColor(LED_COLOR_RED,bottomTile);
-                motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
-                motoConnection.setTileIdle(LED_COLOR_OFF,thirdTop);
-                motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
-                count0 = false;
-                count1 = true;
-                //beginning_step = false;
+            if (forward) {
+                // One - Right foot
+                if (fcounter % 6 == 0) //Right foot - RED - follow
+                {
+                    motoConnection.setTileColor(LED_COLOR_RED, bottomTile);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+                    count0 = false;
+                    count1 = true;
+                    //beginning_step = false;
+                }
+
+                //Two - Left foot
+                else if (fcounter % 6 == 1) {
+                    motoConnection.setTileColor(LED_COLOR_GREEN, thirdTop); //Left foot taps - GREEN - follow
+                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+                    count1 = false;
+                    count2 = true;
+                    //beginning_step = false;
+
+                }
+
+                //Three - Right foot
+                else if (fcounter % 6 == 2) {
+                    motoConnection.setTileColor(LED_COLOR_RED, secondTop); //Right foot - RED - follow
+                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+                    count2 = false;
+                    count3 = true;
+                    //beginning_step = false;
+
+                }
+
+
+                //Five - Left foot
+                if (fcounter % 6 == 3) {
+                    motoConnection.setTileColor(LED_COLOR_GREEN, topTile); //Left foot - GREEN - follow
+                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+                    count3 = false;
+                    count4 = true;
+                    //beginning_step = false;
+                }
+
+                //Six - Right foot (tap again)
+                if (fcounter % 6 == 4) {
+                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile); //Right foot - RED - follow
+                    motoConnection.setTileColor(LED_COLOR_RED, secondTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+                    count4 = false;
+                    count5 = true;
+                    //beginning_step = false;
+
+                }
+
+                //Seven - Left foot
+                if (fcounter % 6 == 5) // To check if topTile tile has been pressed
+                {
+                    motoConnection.setTileColor(LED_COLOR_GREEN, thirdTop); //Left foot - RED - follow
+                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+                    count5 = false;
+                    count6 = true;
+                    //beginning_step = true;
+                    forward = true;
+                    backward = true;
+                    //fcounter -= 2;
+                }
+
+                fcounter += 1;
+            } else {
+
+                motoConnection.setAllTilesBlink(5,LED_COLOR_RED);
+                if (fcounter % 6 == 0) //Right foot - RED - follow
+                {
+                    motoConnection.setTileColor(LED_COLOR_RED, bottomTile);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+                    count0 = false;
+                    count1 = true;
+                    forward = true;
+                    backward = false;
+                    //beginning_step = false;
+                }
+
+                //Two - Left foot
+                else if (fcounter % 6 == 1) {
+                    motoConnection.setTileColor(LED_COLOR_GREEN, thirdTop); //Left foot taps - GREEN - follow
+                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+                    count1 = false;
+                    count2 = true;
+                    //beginning_step = false;
+
+                    System.out.print("time in milliseconds = ");
+                    System.out.println(System.currentTimeMillis());
+                }
+
+                //Three - Right foot
+                else if (fcounter % 6 == 2) {
+                    motoConnection.setTileColor(LED_COLOR_RED, secondTop); //Right foot - RED - follow
+                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+                    count2 = false;
+                    count3 = true;
+                    //beginning_step = false;
+
+                    System.out.print("time in milliseconds = ");
+                    System.out.println(System.currentTimeMillis());
+                }
+
+
+                //Five - Left foot
+                if (fcounter % 6 == 3) {
+                    motoConnection.setTileColor(LED_COLOR_GREEN, topTile); //Left foot - GREEN - follow
+                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+                    count3 = false;
+                    count4 = true;
+                    //beginning_step = false;
+                }
+
+                //Six - Right foot (tap again)
+                if (fcounter % 6 == 4) {
+                    motoConnection.setTileColor(LED_COLOR_RED, bottomTile); //Right foot - RED - follow
+                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+                    count4 = false;
+                    count5 = true;
+                    //beginning_step = false;
+
+                }
+
+                //Seven - Left foot
+                if (fcounter % 6 == 5) // To check if topTile tile has been pressed
+                {
+                    motoConnection.setTileColor(LED_COLOR_GREEN, thirdTop); //Left foot - RED - follow
+                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+                    count5 = false;
+                    count6 = true;
+                    //beginning_step = true;
+                    forward = true;
+                    backward = false;
+
+                }
+
+                fcounter -= 1;
             }
-
-            //Two - Left foot
-            else if (counter % 6 == 1)
-            {
-                motoConnection.setTileColor(LED_COLOR_GREEN,thirdTop); //Left foot taps - GREEN - follow
-                motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
-                motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
-                motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
-                count1 = false;
-                count2 = true;
-                //beginning_step = false;
-
-                System.out.print("time in milliseconds = ");
-                System.out.println(System.currentTimeMillis());
-            }
-
-            //Three - Right foot
-            else if (counter % 6 == 2)
-            {
-                motoConnection.setTileColor(LED_COLOR_RED,secondTop); //Right foot - RED - follow
-                motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
-                motoConnection.setTileIdle(LED_COLOR_OFF,thirdTop);
-                motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
-                count2 = false;
-                count3 = true;
-                //beginning_step = false;
-
-                System.out.print("time in milliseconds = ");
-                System.out.println(System.currentTimeMillis());
-            }
-
-
-            //Five - Left foot
-            if (counter % 6 == 3)
-            {
-                motoConnection.setTileColor(LED_COLOR_GREEN,topTile); //Left foot - GREEN - follow
-                motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
-                motoConnection.setTileIdle(LED_COLOR_OFF,thirdTop);
-                motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
-                count3 = false;
-                count4 = true;
-                //beginning_step = false;
-            }
-
-            //Six - Right foot (tap again)
-            if (counter % 6 == 4)
-            {
-                motoConnection.setTileColor(LED_COLOR_OFF,bottomTile); //Right foot - RED - follow
-                motoConnection.setTileIdle(LED_COLOR_RED,secondTop);
-                motoConnection.setTileIdle(LED_COLOR_OFF,thirdTop);
-                motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
-                count4 = false;
-                count5 = true;
-                //beginning_step = false;
-
-            }
-
-            //Seven - Left foot
-            if (counter % 6 == 5) // To check if topTile tile has been pressed
-            {
-                motoConnection.setTileColor(LED_COLOR_GREEN,thirdTop); //Left foot - RED - follow
-                motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
-                motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
-                motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
-                count5 = false;
-                count6 = true;
-                //beginning_step = true;
-            }
-
-            counter += 1;
-
 
             //And then could replay to one and leave the user in starting position in the thirdTop tile with both feet.
             // Or could flash again violet to mean that both feet ont he thirdTop and you are back at the beginning
