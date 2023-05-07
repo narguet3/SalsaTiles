@@ -32,12 +32,14 @@ public class SalsaLogic extends Game
     boolean count3 = false;
     boolean count4 = false;
     boolean count5 = false;
-    boolean count6 = false;
+    boolean count6 = true;
 
     public int topTile;
     public int secondTop;
     public int thirdTop;
     public int bottomTile;
+
+    int counter = 0;
 
     SalsaLogic()
     {
@@ -52,7 +54,7 @@ public class SalsaLogic extends Game
         GameType gt3 = new GameType(3, GameType.GAME_TYPE_SPEED, 120,"Level 2: Basic + Turn",1);
         addGameType(gt3);
 
-        GameType gt4 = new GameType(3, GameType.GAME_TYPE_SPEED, 120,"Level 3: Follow Song",1);
+        GameType gt4 = new GameType(4, GameType.GAME_TYPE_SPEED, 120,"Level 3: Follow Song",1);
         addGameType(gt4);
 
 
@@ -99,7 +101,7 @@ public class SalsaLogic extends Game
 //            this.GAME_SPEED = 5;
       //  }
         motoConnection.setAllTilesIdle(LED_COLOR_OFF);
-        motoConnection.setTileColor(LED_COLOR_WHITE, topTile);
+        motoConnection.setTileColor(LED_COLOR_WHITE, thirdTop);
 
 
     }
@@ -107,8 +109,12 @@ public class SalsaLogic extends Game
     @Override
     public void onGameUpdate(byte[] message) {
 
-        System.out.println("update called");
         super.onGameUpdate(message);
+        //super.onGameUpdate(message);
+
+        System.out.println("update called");
+
+
         int tileId = AntData.getId(message);
         int event = AntData.getCommand(message);
 //        //int colour = AntData.getColorFromPress(message);
@@ -148,9 +154,13 @@ public class SalsaLogic extends Game
 //
 //        }
 
+        System.out.println("Game info: ");
+        System.out.println(this.selectedGameType.getName());
+        System.out.println(event);
+
         if (this.selectedGameType.getName() == "Learn the Basic") {
             if (event == EVENT_PRESS) {
-                //salsaBasicStep();
+                salsaBasicStep();
 
                 System.out.println("fuckkkkk");
             }
@@ -191,66 +201,71 @@ public class SalsaLogic extends Game
 
 //        if (event == EVENT_PRESS)
 //        {
-            if(beginning_step && count6) {
-                //start over again
-                beginning_step = true;
-                count0 = false;
-                count1 = false;
-                count2 = false;
-                count3 = false;
-                count4 = false;
-                count5 = false;
-                count6 = false;
+//            if(beginning_step && count6) {
+//                //start over again
+//                beginning_step = false;
+//                count0 = true;
+//                count1 = false;
+//                count2 = false;
+//                count3 = false;
+//                count4 = false;
+//                count5 = false;
+//                count6 = false;
+//
+//            }
 
-            }
+//            else if (beginning_step == true) // To check if thirdTop is pressed (aka where both feet start)
+//            {
+//                //maybe can say GREEN = both feet (Can list the instructions on the tablet, or just seperate like the exercises)
+//                motoConnection.setTileColor(LED_COLOR_VIOLET, thirdTop);
+//                motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
+//                motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
+//                motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
+//                count0 = true;
+//                beginning_step = false;
+//                //can give point here, (bc based on what I did you only move on if you hit the right step)
+//                // ^^ because of what I said above the for loop idea is better? Or need to think of a better way to give points.
+//            }
 
-            if (beginning_step == true) // To check if thirdTop is pressed (aka where both feet start)
-            {
-                //maybe can say GREEN = both feet (Can list the instructions on the tablet, or just seperate like the exercises)
-                motoConnection.setTileColorCountdown(LED_COLOR_VIOLET, thirdTop, this.GAME_SPEED);
-                motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
-                motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
-                motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
-                count0 = true;
-                beginning_step = false;
-                //can give point here, (bc based on what I did you only move on if you hit the right step)
-                // ^^ because of what I said above the for loop idea is better? Or need to think of a better way to give points.
-            }
+            System.out.println(counter % 6);
 
             // One - Right foot
-            if ( count0 == true) //Right foot - RED - follow
+            if ( counter % 6 == 0) //Right foot - RED - follow
             {
-                motoConnection.setTileColorCountdown(LED_COLOR_RED,bottomTile,this.GAME_SPEED);
+                motoConnection.setTileColor(LED_COLOR_RED,bottomTile);
                 motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,thirdTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
+                count0 = false;
                 count1 = true;
-                beginning_step = false;
+                //beginning_step = false;
             }
 
             //Two - Left foot
-            if (count1 == true)
+            else if (counter % 6 == 1)
             {
-                motoConnection.setTileColorCountdown(LED_COLOR_GREEN,thirdTop,this.GAME_SPEED); //Left foot taps - GREEN - follow
+                motoConnection.setTileColor(LED_COLOR_GREEN,thirdTop); //Left foot taps - GREEN - follow
                 motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
                 motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
+                count1 = false;
                 count2 = true;
-                beginning_step = false;
+                //beginning_step = false;
 
                 System.out.print("time in milliseconds = ");
                 System.out.println(System.currentTimeMillis());
             }
 
             //Three - Right foot
-            if (count2 == true)
+            else if (counter % 6 == 2)
             {
-                motoConnection.setTileColorCountdown(LED_COLOR_RED,secondTop,this.GAME_SPEED); //Right foot - RED - follow
+                motoConnection.setTileColor(LED_COLOR_RED,secondTop); //Right foot - RED - follow
                 motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
                 motoConnection.setTileIdle(LED_COLOR_OFF,thirdTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
+                count2 = false;
                 count3 = true;
-                beginning_step = false;
+                //beginning_step = false;
 
                 System.out.print("time in milliseconds = ");
                 System.out.println(System.currentTimeMillis());
@@ -258,38 +273,43 @@ public class SalsaLogic extends Game
 
 
             //Five - Left foot
-            if (count3 == true)
+            if (counter % 6 == 3)
             {
-                motoConnection.setTileColorCountdown(LED_COLOR_GREEN,topTile,this.GAME_SPEED); //Left foot - GREEN - follow
+                motoConnection.setTileColor(LED_COLOR_GREEN,topTile); //Left foot - GREEN - follow
                 motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,thirdTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
+                count3 = false;
                 count4 = true;
-                beginning_step = false;
+                //beginning_step = false;
             }
 
             //Six - Right foot (tap again)
-            if (count4 == true)
+            if (counter % 6 == 4)
             {
-                motoConnection.setTileColorCountdown(LED_COLOR_OFF,bottomTile,this.GAME_SPEED); //Right foot - RED - follow
+                motoConnection.setTileColor(LED_COLOR_OFF,bottomTile); //Right foot - RED - follow
                 motoConnection.setTileIdle(LED_COLOR_RED,secondTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,thirdTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
+                count4 = false;
                 count5 = true;
-                beginning_step = false;
+                //beginning_step = false;
 
             }
 
             //Seven - Left foot
-            if (count5 == true) // To check if topTile tile has been pressed
+            if (counter % 6 == 5) // To check if topTile tile has been pressed
             {
-                motoConnection.setTileColorCountdown(LED_COLOR_GREEN,thirdTop, this.GAME_SPEED); //Left foot - RED - follow
+                motoConnection.setTileColor(LED_COLOR_GREEN,thirdTop); //Left foot - RED - follow
                 motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
                 motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
+                count5 = false;
                 count6 = true;
-                beginning_step = false;
+                //beginning_step = true;
             }
+
+            counter += 1;
 
 
             //And then could replay to one and leave the user in starting position in the thirdTop tile with both feet.

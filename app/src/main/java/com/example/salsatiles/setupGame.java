@@ -51,6 +51,7 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
         setUpTiles();
         //tileSetupText.setText(String.valueOf("Orient the tile according to the image below"));
         setContentView(R.layout.activity_setup_game);
+        connection.registerListener(this);
         //startGameButton = findViewById(R.id.startButton);
         image_container = findViewById(R.id.setup_image);
         gt_container = findViewById(R.id.game_type_container);
