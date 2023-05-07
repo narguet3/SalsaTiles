@@ -25,6 +25,15 @@ public class SalsaLogic extends Game
     public int r_color;
 
     int GAME_SPEED = 5;
+    boolean beginning_step = true;
+    boolean count0 = false;
+    boolean count1 = false;
+    boolean count2 = false;
+    boolean count3 = false;
+    boolean count4 = false;
+    boolean count5 = false;
+    boolean count6 = false;
+
     public int topTile;
     public int secondTop;
     public int thirdTop;
@@ -48,62 +57,105 @@ public class SalsaLogic extends Game
 
 
     }
-    public void setUpTiles() {
-        ArrayList<Integer> connectedTiles = motoConnection.connectedTiles;
+//    public void setUpTiles() {
+//        ArrayList<Integer> connectedTiles = motoConnection.connectedTiles;
+//
+//        //Assume 4 tiles are connect
+//        if (connectedTiles.size() != 4) {
+//            motoConnection.setAllTilesBlink(5, LED_COLOR_RED);
+//        } else {
+//            this.topTile = connectedTiles.get(0);
+//            this.secondTop = connectedTiles.get(1);
+//            this.thirdTop = connectedTiles.get(2);
+//            this.bottomTile = connectedTiles.get(3);
+//
+//            //light tiles for user to organize correctly
+//            motoConnection.setTileColor(LED_COLOR_RED, topTile);
+//            motoConnection.setTileColor(LED_COLOR_BLUE, secondTop);
+//            motoConnection.setTileColor(LED_COLOR_VIOLET, thirdTop);
+//            motoConnection.setTileColor(LED_COLOR_GREEN, bottomTile);
+//        }
+//
+//    }
 
-        //Assume 4 tiles are connect
-        if (connectedTiles.size() != 4) {
-            motoConnection.setAllTilesBlink(5, LED_COLOR_RED);
-        } else {
-            this.topTile = connectedTiles.get(0);
-            this.secondTop = connectedTiles.get(1);
-            this.thirdTop = connectedTiles.get(2);
-            this.bottomTile = connectedTiles.get(3);
-
-            //light tiles for user to organize correctly
-            motoConnection.setTileColor(LED_COLOR_RED, topTile);
-            motoConnection.setTileColor(LED_COLOR_BLUE, secondTop);
-            motoConnection.setTileColor(LED_COLOR_VIOLET, thirdTop);
-            motoConnection.setTileColor(LED_COLOR_GREEN, bottomTile);
-        }
-
+    public void setTileOrientation (int t, int t1, int t2, int b) {
+        this.topTile = t;
+        this.secondTop = t1;
+        this.thirdTop = t2;
+        this.bottomTile = b;
     }
+
 
     @Override
     public void onGameStart() {
-        System.out.println("pre game start");
+        //System.out.println("pre game start");
         super.onGameStart();
-        System.out.println("post game start");
+        //System.out.println("post game start");
         //motoConnection.setAllTilesIdle(LED_COLOR_OFF);
 
         System.out.println(this.selectedGameType.getName() == "Learn the Basic");
-        if (this.selectedGameType.getName() == "Learn the Basic") {
-            motoConnection.setAllTilesBlink(5, 2);
-            System.out.println("red");
+//        if (this.selectedGameType.getName() == "Learn the Basic") {
+////            salsaBasic();
+//            this.GAME_SPEED = 5;
+      //  }
+        motoConnection.setAllTilesIdle(LED_COLOR_OFF);
+        motoConnection.setTileColor(LED_COLOR_WHITE, topTile);
 
-        }
 
     }
 
     @Override
     public void onGameUpdate(byte[] message) {
 
+        System.out.println("update called");
         super.onGameUpdate(message);
         int tileId = AntData.getId(message);
         int event = AntData.getCommand(message);
-        //int colour = AntData.getColorFromPress(message);
+//        //int colour = AntData.getColorFromPress(message);
+//
+//        if (this.selectedGameType.getName() == "Learn the Basic") {
+//            salsaBasic(message);
+//            this.GAME_SPEED = 5;
+//
+//        }
 
+//        super.onGameUpdate(message);
+//        int tileId = AntData.getId(message);
+//        int event = AntData.getCommand(message);
+//        int gameType = this.getGameId();
+//
+//        if (event == EVENT_PRESS)
+//        {
+//            // Correct tile block
+//            if (tileId == this.random_tile_id) // To check if the correct tile has been pressed, we check the tile id
+//            {
+//                incrementPlayerScore(10, 1); // Adding 10 points if the player presses a correct tile
+//                this.getOnGameEventListener().onGameTimerEvent(-500); // Player gets 500 ms less to hit the tile in the next round
+//            }
+//            else // Incorrect tile block
+//            {
+//                incrementPlayerScore(-5,1); // Subtracting 10 points if the player presses a correct tile
+//                //connection.setAllTilesIdle(AntData.LED_COLOR_OFF);
+//                this.getOnGameEventListener().onGameTimerEvent(1000); // Player gets 1000 ms more to hit the tile in the next round
+//            }
+//            //
+//            //generateNextTile();
+//        }
+//        else // No attempt block
+//        {
+//            incrementPlayerScore(0,1); // No change to the score
+//            this.getOnGameEventListener().onGameTimerEvent(0); // No change to the timing
+//
+//        }
 
-        if (event == EVENT_PRESS)
-        {
+        if (this.selectedGameType.getName() == "Learn the Basic") {
+            if (event == EVENT_PRESS) {
+                //salsaBasicStep();
 
+                System.out.println("fuckkkkk");
+            }
         }
-        else // No attempt block
-        {
-            incrementPlayerScore(0,1); // No change to the score
-            this.getOnGameEventListener().onGameTimerEvent(0); // No change to the timing
 
-        }
     }
 
 
@@ -116,35 +168,46 @@ public class SalsaLogic extends Game
     }
 
 
-    public void Salsa_basic(byte[] message)
+    public void salsaBasicStep()
     {
-        super.onGameUpdate(message);
-        int tileId = AntData.getId(message);
-        int event = AntData.getCommand(message);
+
+//        super.onGameUpdate(message);
+//        int tileId = AntData.getId(message);
+//        int event = AntData.getCommand(message);
 
         // for ex: could be if used chose Level 1, GAME_SPEED = 1. I think this would go here?
 
-        final int GAME_SPEED = 1; // is this 1 sec?
+//        final int GAME_SPEED = 1; // is this 1 sec?
 
-        boolean beginning_step = true;
-        boolean count0;
-        boolean count1;
-        boolean count2;
-        boolean count3;
-        boolean count4;
-        boolean count5;
-        boolean count6;
-        boolean count7;
-
+//        boolean beginning_step = true;
+//        boolean count0 = false;
+//        boolean count1 = false;
+//        boolean count2 = false;
+//        boolean count3 = false;
+//        boolean count4 = false;
+//        boolean count5 = false;
+//        boolean count6 = false;
 
 
-        if (event == EVENT_PRESS)
-        {
+//        if (event == EVENT_PRESS)
+//        {
+            if(beginning_step && count6) {
+                //start over again
+                beginning_step = true;
+                count0 = false;
+                count1 = false;
+                count2 = false;
+                count3 = false;
+                count4 = false;
+                count5 = false;
+                count6 = false;
 
-            if (tileId == this.topTile && beginning_step == true) // To check if thirdTop is pressed (aka where both feet start)
+            }
+
+            if (beginning_step == true) // To check if thirdTop is pressed (aka where both feet start)
             {
                 //maybe can say GREEN = both feet (Can list the instructions on the tablet, or just seperate like the exercises)
-                motoConnection.setTileColorCountdown(LED_COLOR_VIOLET,thirdTop, this.GAME_SPEED);
+                motoConnection.setTileColorCountdown(LED_COLOR_VIOLET, thirdTop, this.GAME_SPEED);
                 motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
                 motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
@@ -155,7 +218,7 @@ public class SalsaLogic extends Game
             }
 
             // One - Right foot
-            if (tileId == this.bottomTile && count0 == true) //Right foot - RED - follow
+            if ( count0 == true) //Right foot - RED - follow
             {
                 motoConnection.setTileColorCountdown(LED_COLOR_RED,bottomTile,this.GAME_SPEED);
                 motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
@@ -166,7 +229,7 @@ public class SalsaLogic extends Game
             }
 
             //Two - Left foot
-            if (tileId == this.thirdTop && count1 == true)
+            if (count1 == true)
             {
                 motoConnection.setTileColorCountdown(LED_COLOR_GREEN,thirdTop,this.GAME_SPEED); //Left foot taps - GREEN - follow
                 motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
@@ -174,10 +237,13 @@ public class SalsaLogic extends Game
                 motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
                 count2 = true;
                 beginning_step = false;
+
+                System.out.print("time in milliseconds = ");
+                System.out.println(System.currentTimeMillis());
             }
 
             //Three - Right foot
-            if (tileId == this.secondTop && count2 == true)
+            if (count2 == true)
             {
                 motoConnection.setTileColorCountdown(LED_COLOR_RED,secondTop,this.GAME_SPEED); //Right foot - RED - follow
                 motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
@@ -185,11 +251,14 @@ public class SalsaLogic extends Game
                 motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
                 count3 = true;
                 beginning_step = false;
+
+                System.out.print("time in milliseconds = ");
+                System.out.println(System.currentTimeMillis());
             }
 
 
             //Five - Left foot
-            if (tileId == this.topTile && count3 == true)
+            if (count3 == true)
             {
                 motoConnection.setTileColorCountdown(LED_COLOR_GREEN,topTile,this.GAME_SPEED); //Left foot - GREEN - follow
                 motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
@@ -200,10 +269,10 @@ public class SalsaLogic extends Game
             }
 
             //Six - Right foot (tap again)
-            if (tileId == this.bottomTile && count4 == true)
+            if (count4 == true)
             {
-                motoConnection.setTileColorCountdown(LED_COLOR_RED,bottomTile,this.GAME_SPEED); //Right foot - RED - follow
-                motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
+                motoConnection.setTileColorCountdown(LED_COLOR_OFF,bottomTile,this.GAME_SPEED); //Right foot - RED - follow
+                motoConnection.setTileIdle(LED_COLOR_RED,secondTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,thirdTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
                 count5 = true;
@@ -212,7 +281,7 @@ public class SalsaLogic extends Game
             }
 
             //Seven - Left foot
-            if (tileId == this.thirdTop && count5 == true) // To check if topTile tile has been pressed
+            if (count5 == true) // To check if topTile tile has been pressed
             {
                 motoConnection.setTileColorCountdown(LED_COLOR_GREEN,thirdTop, this.GAME_SPEED); //Left foot - RED - follow
                 motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
@@ -239,6 +308,6 @@ public class SalsaLogic extends Game
 
         }
 
-    }
+    //}
 
 }
