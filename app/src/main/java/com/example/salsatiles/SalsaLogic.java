@@ -405,6 +405,170 @@ public class SalsaLogic extends Game
             // Then what use what's above to check if they hit correctly and give a point. maybe can use getcolor inside the if statement to check.
             // Then if the getID = red when pressed point is given
 
+        // --- CODE STARTS HERE ---
+
+// When the game starts what can be done is that the player hits the start button. The user stands in the starting tile for three seconds,
+// then the game actually starts when they hit the first count
+
+        private long startingposition_lit;
+        private long one_lit;
+        private long two_lit;
+        private long three_lit;
+        private long five_lit;
+        private long six_lit;
+        private long seven_lit;
+
+        public void Point_system ()
+        {
+
+            int numPractice = 5;
+            int[][] scores = new int[6][numPractice]; // initialize the array to store scores
+
+            for (int practice = 0; practice < numPractice; practice++)
+            {
+                // Lighting the tiles according to FOLLOW steps
+
+                // The user is going to tap in the same tile with both feet, will have to let them know this in the instructions
+                // We won't use this time in the matrix
+                motoConnection.setTileColorCountdown(LED_COLOR_VIOLET,thirdTop,this.GAME_SPEED); // Start - Both feet
+                startingposition_lit = System.currentTimeMillis();
+
+                motoConnection.setTileColorCountdown(LED_COLOR_RED,bottomTile,this.GAME_SPEED); //ONE: Right foot - RED
+                one_lit = System.currentTimeMillis();
+
+                motoConnection.setTileColorCountdown(LED_COLOR_GREEN,thirdTop,this.GAME_SPEED); //TWO: Left foot taps - GREEN
+                two_lit = System.currentTimeMillis();
+
+                motoConnection.setTileColorCountdown(LED_COLOR_RED,secondTop,this.GAME_SPEED); //THREE: Right foot - RED
+                three_lit = System.currentTimeMillis();
+
+                motoConnection.setTileColorCountdown(LED_COLOR_GREEN,topTile,this.GAME_SPEED); //FIVE: Left foot - GREEN
+                five_lit = System.currentTimeMillis();
+
+                motoConnection.setTileColorCountdown(LED_COLOR_RED,secondTop,this.GAME_SPEED); //SIX: Right foot - RED  // TELL NIC OF THIS
+                six_lit = System.currentTimeMillis();
+
+                motoConnection.setTileColorCountdown(LED_COLOR_GREEN,thirdTop,this.GAME_SPEED); //SEVEN: Left foot - GREEN
+                seven_lit = System.currentTimeMillis();
+
+        /*
+        Ignore what I said below because it's a for loop
+        // Let's have them end on ONE - to signify the end
+        motoConnection.setTileColorCountdown(LED_COLOR_RED,bottomTile,this.GAME_SPEED); //ONE: Right foot - RED
+        one_lit = SystemSystem.nanoTime();
+        */
+
+                if (event == EVENT_PRESS)
+                {
+                    // if (tileId == thirdTop)
+                    // {
+                    //     // We won't use this time
+                    //     beginning_pressed = System.currentTimeMillis();
+                    // }
+
+                    if (tileId == bottomTile)
+                    {
+
+                        one_pressed = System.currentTimeMillis();
+                    }
+
+                    if (tileId == thirdTop)
+                    {
+                        two_pressed = System.currentTimeMillis();
+                    }
+
+                    if (tileId == topTile)
+                    {
+                        three_pressed = System.currentTimeMillis();
+                    }
+
+                    if (tileId == bottomTile)
+                    {
+                        five_pressed = System.currentTimeMillis();
+                    }
+
+                    if (tileId == thirdTop)
+                    {
+                        six_pressed = System.currentTimeMillis();
+                    }
+
+                    if (tileId == thirdTop)
+                    {
+                        seven_pressed = System.currentTimeMillis();
+                    }
+
+                }
+
+                // Need to make an array to store the scores otherwise it'll override it.
+                // If not, can simply make it like this and then call the Point_system function three times from the Main or Salsa logic
+
+                //int[] myIntArray = new int[practice*counts];
+
+
+                player_delay_c1 = one_pressed - one_lit;
+                player_delay1_c2 = two_pressed - two_lit;
+                player_delay1_c3 = three_pressed - three_lit;
+                player_delay1_c5 = five_pressed - five_lit;
+                player_delay1_c6 = six_pressed - six_lit;
+                player_delay1_c7 = seven_pressed - seven_lit;
+
+                // normalize by level (AKA GAME_SPEED) by dividing by the game speed
+                double timeDiff1 = (double) (player_delay1_c2) / gameSpeed;
+                double timeDiff2 = (double) (player_delay1_c2) / gameSpeed;
+                double timeDiff3 = (double) (player_delay1_c3) / gameSpeed;
+                double timeDiff5 = (double) (player_delay1_c5) / gameSpeed;
+                double timeDiff6 = (double) (player_delay1_c6) / gameSpeed;
+                double timeDiff7 = (double) (player_delay1_c7) / gameSpeed;
+
+                // int score_c1 = (int) (1000 / timeDiff1); // diving by 1000 since that's the max for points received
+                // int score_c2 = (int) (1000 / timeDiff2);
+                // int score_c3 = (int) (1000 / timeDiff3);
+                // int score_c5 = (int) (1000 / timeDiff5);
+                // int score_c6 = (int) (1000 / timeDiff6);
+                // int score_c7 = (int) (1000 / timeDiff7);
+
+                // diving by 1000 since that's the max for points received
+                scores[0][practice] = (int) (1000 / timeDiff1);
+                scores[1][practice] = (int) (1000 / timeDiff2);
+                scores[2][practice] = (int) (1000 / timeDiff3);
+                scores[3][practice] = (int) (1000 / timeDiff5);
+                scores[4][practice] = (int) (1000 / timeDiff6);
+                scores[5][practice] = (int) (1000 / timeDiff7);
+
+                // TO DO:
+                //include error handling for cases where the user does not tap on the correct tile or takes too long to tap on a tile!!!
+                // if they hit it perfetly will need an if statement so that there is not system error
+
+            }
+
+            // Calculate total scores for each practice round
+            int[] totalScores = new int[numPractice];
+            for (int practice = 0; practice < numPractice; practice++)
+            {
+                for (int count = 0; count < 6; count++)
+                {
+                    totalScores[practice] += scores[count][practice];
+                }
+            }
+
+            // Print the matrix and total scores for each practice round
+            for (int count = 0; count < 6; count++)
+            {
+                for (int practice = 0; practice < numPractice; practice++)
+                {
+                    System.out.print(scores[count][practice] + " ");
+                }
+                System.out.println();
+            }
+
+            // for (int practice = 0; practice < numPractice; practice++)
+            // {
+            //     System.out.println("Total score for practice round " + (practice + 1) + ": " + totalScores[practice]);
+            // }
+
+        }
+        // --- CODE ENDS HERE ---
+
         }
 
     //}
