@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+
 public class SalsaLogic extends Game
 {
     MotoConnection motoConnection = MotoConnection.getInstance();
@@ -23,22 +24,48 @@ public class SalsaLogic extends Game
     int hitColor;
     public int r_color;
 
+    int GAME_SPEED = 5;
+    public int topTile;
+    public int secondTop;
+    public int thirdTop;
+    public int bottomTile;
+
     SalsaLogic()
     {
         setName("Salsa Game");
 
-        GameType gt = new GameType(1, GameType.GAME_TYPE_TIME, 30,"Learn the Basic",1);
+        GameType gt = new GameType(1, GameType.GAME_TYPE_SPEED, 30,"Learn the Basic",1);
         addGameType(gt);
 
-        GameType gt2 = new GameType(2, GameType.GAME_TYPE_TIME, 60,"Level 1: Basics",1);
+        GameType gt2 = new GameType(2, GameType.GAME_TYPE_SPEED, 60,"Level 1: Basics",1);
         addGameType(gt2);
 
-        GameType gt3 = new GameType(3, GameType.GAME_TYPE_TIME, 120,"Level 2: Basic + Turn",1);
+        GameType gt3 = new GameType(3, GameType.GAME_TYPE_SPEED, 120,"Level 2: Basic + Turn",1);
         addGameType(gt3);
 
-        GameType gt4 = new GameType(3, GameType.GAME_TYPE_TIME, 120,"Level 3: Follow Song",1);
+        GameType gt4 = new GameType(3, GameType.GAME_TYPE_SPEED, 120,"Level 3: Follow Song",1);
         addGameType(gt4);
 
+
+    }
+    public void setUpTiles() {
+        ArrayList<Integer> connectedTiles = motoConnection.connectedTiles;
+
+        //Assume 4 tiles are connect
+        if (connectedTiles.size() != 4) {
+            motoConnection.setAllTilesBlink(5, LED_COLOR_RED);
+        } else {
+            this.topTile = connectedTiles.get(0);
+            this.secondTop = connectedTiles.get(1);
+            this.thirdTop = connectedTiles.get(2);
+            this.bottomTile = connectedTiles.get(3);
+
+            //light tiles for user to organize correctly
+            motoConnection.setTileColor(LED_COLOR_RED, topTile);
+            motoConnection.setTileColor(LED_COLOR_BLUE, secondTop);
+            motoConnection.setTileColor(LED_COLOR_VIOLET, thirdTop);
+            motoConnection.setTileColor(LED_COLOR_GREEN, bottomTile);
+        }
 
     }
 
@@ -100,22 +127,26 @@ public class SalsaLogic extends Game
         final int GAME_SPEED = 1; // is this 1 sec?
 
         boolean beginning_step = true;
+        boolean count0;
         boolean count1;
         boolean count2;
         boolean count3;
+        boolean count4;
         boolean count5;
         boolean count6;
         boolean count7;
 
+
+
         if (event == EVENT_PRESS)
         {
 
-            if (tileId == setupGame. && beginning_step == true) // To check if thirdTop is pressed (aka where both feet start)
+            if (tileId == this.topTile && beginning_step == true) // To check if thirdTop is pressed (aka where both feet start)
             {
                 //maybe can say GREEN = both feet (Can list the instructions on the tablet, or just seperate like the exercises)
-                motoConnection.setTileColorCountdown(LED_COLOR_VIOLET,thirdTop,this.GAME_SPEED);
+                motoConnection.setTileColorCountdown(LED_COLOR_VIOLET,thirdTop, this.GAME_SPEED);
                 motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
-                motoConnection.setTileIdle(LED_COLOR_OFFsecondTop);
+                motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
                 count0 = true;
                 beginning_step = false;
@@ -183,7 +214,7 @@ public class SalsaLogic extends Game
             //Seven - Left foot
             if (tileId == this.thirdTop && count5 == true) // To check if topTile tile has been pressed
             {
-                motoConnection.setTileColorCountdown(LED_COLOR_GREEN,thirdTop,this.GAME_SPEED); //Left foot - RED - follow
+                motoConnection.setTileColorCountdown(LED_COLOR_GREEN,thirdTop, this.GAME_SPEED); //Left foot - RED - follow
                 motoConnection.setTileIdle(LED_COLOR_OFF,secondTop);
                 motoConnection.setTileIdle(LED_COLOR_OFF,bottomTile);
                 motoConnection.setTileIdle(LED_COLOR_OFF,topTile);
