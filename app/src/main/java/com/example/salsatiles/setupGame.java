@@ -23,6 +23,8 @@ import com.livelife.motolibrary.OnAntEventListener;
 import com.livelife.motolibrary.MotoSound;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class setupGame extends AppCompatActivity implements OnAntEventListener {
 
@@ -38,11 +40,18 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
     Button startGameButton;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        game_object.stopGame();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUpTiles();
         //tileSetupText.setText(String.valueOf("Orient the tile according to the image below"));
         setContentView(R.layout.activity_setup_game);
+        connection.registerListener(this);
         //startGameButton = findViewById(R.id.startButton);
         image_container = findViewById(R.id.setup_image);
         gt_container = findViewById(R.id.game_type_container);
@@ -73,11 +82,110 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
             gt_container.addView(b);
         }
 
+        game_object.setOnGameEventListener(new Game.OnGameEventListener() {
+            @Override
+            public void onGameTimerEvent(int i) {
+
+            }
+
+            @Override
+            public void onGameScoreEvent(int i, int i1) {
+
+            }
+
+            @Override
+            public void onGameStopEvent() {
+
+            }
+
+            @Override
+            public void onSetupMessage(String s) {
+
+            }
+
+            @Override
+            public void onGameMessage(String s) {
+
+            }
+
+            @Override
+            public void onSetupEnd() {
+
+            }
+        });
+
+        if (game_object.getName() == "Learn the Basic") {
+
+        }
+
+//        Thread my_thread = new Thread()
+//        {
+//            int i = rounds - 1; // Loop variable
+//
+//            String end_message = "Game Over"; // This message is displayed at the end of the last round
+//            int round = 1; // Stores the current round number
+//
+//            @Override
+//            public void run()
+//            {
+//                try
+//                {
+//                    while (i >= 0)
+//                    {
+//                        //game_object.generateNextTile();
+//                        Thread.sleep(delay);
+//
+//                        runOnUiThread(new Runnable()
+//                        {
+//
+//                            @Override
+//                            public void run()
+//                            {
+//                                if (i >= 0)
+//                                {
+//                                    connection.setAllTilesIdle(AntData.LED_COLOR_OFF);
+//                                    game_object.generateNextTile();
+//                                    //hit_color.setText(colorNames.get(game_object.r_color)); // Updating and displaying a new colour
+//                                    //game_object.generateNextTile(); // Updating the colour of the Moto tiles
+//                                    //game_round.setText(toString().valueOf(round)); // Updating and displaying a new colour
+//                                    round++;
+//                                }
+//                                else
+//                                {
+//                                    Timer timer_object  = new Timer(); // Object of the Timer Class
+//
+//                                    // Displaying the end game message
+//                                    timer_object.schedule(new TimerTask()
+//                                    {
+//                                        @Override
+//                                        public void run()
+//                                        {
+//                                            finish();
+//                                        }
+//                                    }, 5000);
+//
+//                                    //hit_color.setText(end_message);
+//                                    game_object.onGameEnd();
+//                                }
+//                                i--;
+//                            }
+//                        });
+//                    }
+//                }
+//                catch (InterruptedException e)
+//                {
+//
+//                }
+//            }
+//        };
+//
+//        my_thread.start();
+
     }
 
     @Override
     public void onMessageReceived(byte[] bytes, long l) {
-
+        game_object.addEvent(bytes);
     }
 
     @Override
@@ -89,6 +197,7 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
     public void onNumbersOfTilesConnected(int i) {
 
     }
+
     public void setUpTiles() {
         ArrayList<Integer> connectedTiles = connection.connectedTiles;
 
@@ -96,10 +205,10 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
         if (connectedTiles.size() != 4) {
             connection.setAllTilesBlink(5, LED_COLOR_RED);
         } else {
-            topTile = connectedTiles.get(0);
-            secondTop = connectedTiles.get(1);
-            thirdTop = connectedTiles.get(2);
-            bottomTile = connectedTiles.get(3);
+            this.topTile = connectedTiles.get(0);
+            this.secondTop = connectedTiles.get(1);
+            this.thirdTop = connectedTiles.get(2);
+            this.bottomTile = connectedTiles.get(3);
 
             //light tiles for user to organize correctly
             connection.setTileColor(LED_COLOR_RED, topTile);
@@ -108,6 +217,9 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
             connection.setTileColor(LED_COLOR_GREEN, bottomTile);
         }
 
+        game_object.setTileOrientation(topTile, secondTop, thirdTop, bottomTile);
+
     }
+
 
 }
