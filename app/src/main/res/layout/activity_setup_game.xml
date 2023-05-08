@@ -32,19 +32,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginTop="-200dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="-200dp"
         android:text="Orient the tile according to the image below. \n \nInstructions: After orienting
 , face towards the red tile. Red lit tile = right foot, Green lit tile = left foot, White lit tile = both feet
-,Double lit tile = pivot with both feet" />
+, Double lit tile = pivot with both feet \n\n
+Press back button to ensure tiles are correctly oriented before starting a new game.\n\n
+Have fun!!" />
 
     <ImageView
         android:id="@+id/setup_image"
         android:layout_width="match_parent"
-        android:layout_height="326dp"
+        android:layout_height="195dp"
         android:layout_below="@id/tileSetupText"
         android:layout_centerVertical="true"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="12dp"
         app:srcCompat="@drawable/setup_image" />
 
     <LinearLayout

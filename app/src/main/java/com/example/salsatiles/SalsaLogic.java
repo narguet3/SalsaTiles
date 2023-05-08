@@ -43,18 +43,17 @@ public class SalsaLogic extends Game
     {
         setName("Salsa Game");
 
-        GameType gt2 = new GameType(2, GameType.GAME_TYPE_SPEED, 60,"Learn the Basic",1);
-        addGameType(gt2);
-
-        GameType gt3 = new GameType(3, GameType.GAME_TYPE_SPEED, 120,"Learn the Basic + Turn",1);
-        addGameType(gt3);
-
         GameType gt = new GameType(0, GameType.GAME_TYPE_SPEED, 30,"Play Level 1: Basics",1);
         addGameType(gt);
 
         GameType gt1 = new GameType(1, GameType.GAME_TYPE_SPEED, 30,"Play Level 1: Basic + Turn",1);
         addGameType(gt1);
 
+        GameType gt2 = new GameType(2, GameType.GAME_TYPE_SPEED, 60,"Learn the Basic",1);
+        addGameType(gt2);
+
+        GameType gt3 = new GameType(3, GameType.GAME_TYPE_SPEED, 120,"Learn the Basic + Turn",1);
+        addGameType(gt3);
 
     }
 
@@ -86,7 +85,7 @@ public class SalsaLogic extends Game
 
         double score = 0;
         if (event == EVENT_PRESS) {
-            if (this.selectedGameType.getName() == "Level 1: Basics") {
+            if (this.selectedGameType.getName() == "Play Level 1: Basics") {
                 if (basicSteps.size() == 18) {
                     score = pointSystem(basicSteps);
                     incrementPlayerScore((int)score, 1);
@@ -99,7 +98,7 @@ public class SalsaLogic extends Game
                     basicSteps.add((double) System.currentTimeMillis());
                 }
             }
-            else if(this.selectedGameType.getName() == "Level 1: Basic + Turn") {
+            else if(this.selectedGameType.getName() == "Play Level 1: Basic + Turn") {
                 if (turnSteps.size() == 18) {
                     score = pointSystem(turnSteps);
                     incrementPlayerScore((int)score, 1);
@@ -124,7 +123,7 @@ public class SalsaLogic extends Game
                 }
                 System.out.println("Number of times pressed: " + gamePressedCounter);
                 gamePressedCounter++;
-            } else if (this.selectedGameType.getName() == "Learn the Basic + Turn") {
+            } else if (this.selectedGameType.getName() =="Learn the Basic + Turn") {
                 if (gamePressedCounter == 17 ) {
                     timeStep[gamePressedCounter] = System.currentTimeMillis();
                     gamePressedCounter = 0;
@@ -320,10 +319,8 @@ public class SalsaLogic extends Game
                     totalPoints =+ (timeSteps.get(i) - timeSteps.get(i-1));
                 }
 
-
                 return 10000/totalPoints;
             }
-
 
 
 }
