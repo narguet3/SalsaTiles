@@ -12,6 +12,8 @@ import com.livelife.motolibrary.Game;
 import com.livelife.motolibrary.GameType;
 import com.livelife.motolibrary.MotoConnection;
 
+import java.util.concurrent.TimeUnit;
+
 
 public class SalsaLogic extends Game
 {
@@ -279,7 +281,14 @@ public class SalsaLogic extends Game
                 //Six
                 // PIVOT point - Here light third top and top Violet to signify pivot
                 if (fcounter % 7 == 4) {
-                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile); //Right foot - RED - follow
+                    motoConnection.setTileIdle(LED_COLOR_RED, bottomTile); //Right foot - RED - follow
+                    motoConnection.setTileColor(LED_COLOR_OFF, secondTop);
+                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                    motoConnection.setTileColor(LED_COLOR_OFF, topTile);
+
+                    TimeUnit.SECONDS.sleep(1);
+
+                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
                     motoConnection.setTileColor(LED_COLOR_BLUE, secondTop); // BLUE
                     motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
                     motoConnection.setTileColor(LED_COLOR_BLUE, topTile); // BLUE
@@ -294,7 +303,8 @@ public class SalsaLogic extends Game
                     motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
                     motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
 
-                    wait(1000);
+                    TimeUnit.SECONDS.sleep(1);
+
                     //Left foot - RED - follow
                     motoConnection.setTileColor(LED_COLOR_BLUE, thirdTop);
                     motoConnection.setTileColor(LED_COLOR_BLUE, secondTop);
@@ -314,9 +324,103 @@ public class SalsaLogic extends Game
 
                 }
 
+            }
+
+                public void salsaSideStep() throws InterruptedException {
+
+
+                    System.out.println(fcounter % 7);
+
+                    if (forward) {
+                        // One - Right foot
+                        if (fcounter % 7 == 0) //Right foot - RED - follow
+                        {
+                            motoConnection.setTileColor(LED_COLOR_RED, bottomTile);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+
+                        }
+
+                        //Two - Left foot
+                        else if (fcounter % 7 == 1) {
+                            motoConnection.setTileColor(LED_COLOR_GREEN, thirdTop); //Left foot taps - GREEN - follow
+                            motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+
+
+                        }
+
+                        //Three - Right foot
+                        else if (fcounter % 7 == 2) {
+                            motoConnection.setTileColor(LED_COLOR_RED, secondTop); //Right foot - RED - follow
+                            motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+
+
+                        }
+
+                        // Turn step same up to here
+                        //Five - Left foot
+                        if (fcounter % 7 == 3) {
+                            motoConnection.setTileColor(LED_COLOR_GREEN, topTile); //Left foot - GREEN - follow
+                            motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+
+                        }
+
+                        //Six
+                        // PIVOT point - Here light third top and top Violet to signify pivot
+                        if (fcounter % 7 == 4) {
+                            motoConnection.setTileIdle(LED_COLOR_RED, bottomTile); //Right foot - RED - follow
+                            motoConnection.setTileColor(LED_COLOR_OFF, secondTop);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                            motoConnection.setTileColor(LED_COLOR_OFF, topTile);
+
+                            TimeUnit.SECONDS.sleep(1);
+
+                            motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+                            motoConnection.setTileColor(LED_COLOR_BLUE, secondTop); // BLUE
+                            motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                            motoConnection.setTileColor(LED_COLOR_BLUE, topTile); // BLUE
+
+                        }
+
+                        //Seven - Left foot & PIVOT
+                        if (fcounter % 7 == 5) // To check if topTile tile has been pressed
+                        {
+                            motoConnection.setTileColor(LED_COLOR_GREEN, thirdTop); //Left foot - RED - follow
+                            motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+
+                            TimeUnit.SECONDS.sleep(1);
+
+                            //Left foot - RED - follow
+                            motoConnection.setTileColor(LED_COLOR_BLUE, thirdTop);
+                            motoConnection.setTileColor(LED_COLOR_BLUE, secondTop);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+
+                        }
+
+                        // End in one for TURN
+                        // One - Right foot
+                        if (fcounter % 7 == 6) //Right foot - RED - follow
+                        {
+                            motoConnection.setTileColor(LED_COLOR_RED, bottomTile);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+                            motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+
+                        }
+
                 fcounter += 1;
             }
 
-        }
+
 
 }
