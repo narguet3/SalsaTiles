@@ -7,20 +7,44 @@
     tools:context=".setupGame">
 
     <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="8dp"
+        android:text="Score:"
+        android:textSize="44sp" />
+
+    <TextView
+        android:id="@+id/score_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="18dp"
+        android:layout_toEndOf="@id/score"
+        android:text="#"
+        android:textSize="44sp" />
+
+    <TextView
         android:id="@+id/tileSetupText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginTop="-200dp"
-        android:text="Orient the tile according to the image below" />
+        android:layout_marginLeft="20dp"
+        android:text="Orient the tile according to the image below. \n \nInstructions: After orienting
+, face towards the red tile. Red lit tile = right foot, Green lit tile = left foot, White lit tile = both feet
+,Double lit tile = pivot with both feet" />
 
     <ImageView
         android:id="@+id/setup_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="326dp"
         android:layout_below="@id/tileSetupText"
         android:layout_centerVertical="true"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="14dp"
         app:srcCompat="@drawable/setup_image" />
 
     <LinearLayout

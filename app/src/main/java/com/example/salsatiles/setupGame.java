@@ -40,13 +40,18 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
     public int bottomTile;
     Button startGameButton;
     TextView player_score;
+    String gameName = "";
 
     Thread my_thread;
 
-    int delay = 2000;
+    int delay = 1000;
     int count = 18;
 
     int points_scored = 0;
+    int gameLitCounter = 0;
+    double [] timeLit = new double[18];
+
+
 
     @Override
     public void onBackPressed() {
@@ -64,6 +69,7 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
         //startGameButton = findViewById(R.id.startButton);
         image_container = findViewById(R.id.setup_image);
         gt_container = findViewById(R.id.game_type_container);
+        player_score = findViewById(R.id.score_value);
 
 //        startGameButton.setOnClickListener(new View.OnClickListener()
 //        {
@@ -87,7 +93,8 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
                     game_object.selectedGameType = gt;
                     game_object.startGame();
 
-                    if (gt.getName() == "Level 1: Basics" || game_object.getName() == "Level 2: Basic + Turn" ) {
+                    if (gt.getName() == "Learn the Basic" || gt.getName() == "Learn the Basic + Turn" ) {
+                        gameName = gt.getName();
                         my_thread.start();
                     }
 
@@ -166,15 +173,16 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
                                 if (i >= 0)
                                 {
                                     connection.setAllTilesIdle(AntData.LED_COLOR_OFF);
-                                    if (game_object.getName() == "Level 1: Basics") {
+                                    if (gameName == "Learn the Basic") {
                                         game_object.salsaBasicStep();
-                                    } else if (game_object.getName() == "Level 2: Basic + Turn") {
+                                    } else if (gameName == "Learn the Basic + Turn") {
                                         game_object.salsaBasicTurn();
                                     }
+                                    System.out.println(gameName);
 
-                                    //hit_color.setText(colorNames.get(game_object.r_color)); // Updating and displaying a new colour
-                                    //game_object.generateNextTile(); // Updating the colour of the Moto tiles
-                                    //game_round.setText(toString().valueOf(round)); // Updating and displaying a new colour
+                                    if (round != 18) {
+                                        timeLit[round] = System.currentTimeMillis();
+                                    }
                                     round++;
                                 }
                                 else
@@ -187,6 +195,8 @@ public class setupGame extends AppCompatActivity implements OnAntEventListener {
                                         @Override
                                         public void run()
                                         {
+                                            System.out.println(gameName + " Finished");
+                                            game_object.setLitArray(timeLit);
                                             finish();
                                         }
                                     }, 5000);
