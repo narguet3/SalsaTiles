@@ -52,9 +52,6 @@ public class SalsaLogic extends Game
         GameType gt3 = new GameType(3, GameType.GAME_TYPE_SPEED, 120,"Level 2: Basic + Turn",1);
         addGameType(gt3);
 
-        GameType gt4 = new GameType(4, GameType.GAME_TYPE_SPEED, 120,"Level 3: Follow Song",1);
-        addGameType(gt4);
-
         forward = true;
         backward = false;
 
@@ -138,40 +135,47 @@ public class SalsaLogic extends Game
         System.out.println("Game info: ");
         System.out.println(this.selectedGameType.getName());
         System.out.println(event);
-
-        if (this.selectedGameType.getName() == "Learn the Basic") {
-            if (event == EVENT_PRESS) {
+        if (event == EVENT_PRESS) {
+            if (this.selectedGameType.getName() == "Learn the Basic") {
                 salsaBasicStep();
 
                 System.out.println("fuckkkkk");
+            } else if (this.selectedGameType.getName() == "Level 1: Basics") {
+
+//                if (gameOneInitial) {
+//                    gameOneInitial = false;
+//                    try {
+//                        salsaBasicInitial();
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//
+//                if (gameOnePressedCounter == 6) {
+//                    timeStep[gameOnePressedCounter] = System.currentTimeMillis();
+//                    gameOnePressedCounter = 0;
+//
+//
+//                    System.out.println("Total points: ");
+//
+//                    System.out.println(pointSystem(timeLit, timeStep));
+//
+//
+//                    Arrays.fill(timeLit, 0.0);
+//                    Arrays.fill(timeStep, 0.0);
+//
+//                    gameOneInitial = true;
+//
+//                } else {
+//                    timeStep[gameOnePressedCounter] = System.currentTimeMillis();
+//                    gameOnePressedCounter += 1;
+//                }
+//                System.out.println("Game one selected");
+                if(tileId == thirdTop) {
+                    this.getOnGameEventListener().onGameTimerEvent(1000);
+                }
             }
-        } else if (this.selectedGameType.getName() == "Level 1: Basics") {
-            try {
-                salsaBasicInitial();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (gameOnePressedCounter == 6){
-                timeStep[gameOnePressedCounter] = System.currentTimeMillis();
-                gameOnePressedCounter = 0;
-
-
-                    System.out.println("Total points: ");
-
-                    System.out.println(pointSystem());
-
-
-                Arrays.fill(timeLit, 0.0);
-                Arrays.fill(timeStep, 0.0);
-
-            } else {
-                timeStep[gameOnePressedCounter] = System.currentTimeMillis();
-                gameOnePressedCounter += 1;
-            }
-            System.out.println("Game one selected");
         }
-
     }
 
 
@@ -184,10 +188,12 @@ public class SalsaLogic extends Game
     }
 
 
-    public void salsaBasicInitial() throws InterruptedException {
+    public void salsaBasicInitial() {
 
-        if (gameOneInitial) {
-            gameOneInitial = false;
+
+
+            motoConnection.setAllTilesIdle(LED_COLOR_OFF);
+            motoConnection.setTileColor(LED_COLOR_GREEN, topTile);
 
             for (int i = 0; i < 6; i++) {
                 timeLit[i] = System.currentTimeMillis();
@@ -201,7 +207,7 @@ public class SalsaLogic extends Game
                     motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
                     motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
                     motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
-                    TimeUnit.SECONDS.sleep(1);
+                    //TimeUnit.SECONDS.sleep(1);
                 }
 
                 //Two - Left foot
@@ -210,7 +216,7 @@ public class SalsaLogic extends Game
                     motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
                     motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
                     motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
-                    TimeUnit.SECONDS.sleep(1);
+                    //TimeUnit.SECONDS.sleep(1);
                 }
 
                 //Three - Right foot
@@ -219,7 +225,7 @@ public class SalsaLogic extends Game
                     motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
                     motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
                     motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
-                    TimeUnit.SECONDS.sleep(1);
+                    //TimeUnit.SECONDS.sleep(1);
                 }
 
                 //Five - Left foot
@@ -228,7 +234,7 @@ public class SalsaLogic extends Game
                     motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
                     motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
                     motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
-                    TimeUnit.SECONDS.sleep(1);
+                    //TimeUnit.SECONDS.sleep(1);
 
                 }
 
@@ -238,7 +244,7 @@ public class SalsaLogic extends Game
                     motoConnection.setTileColor(LED_COLOR_RED, secondTop);
                     motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
                     motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
-                    TimeUnit.SECONDS.sleep(1);
+                    //TimeUnit.SECONDS.sleep(1);
 
                 }
                 //Seven - Left foot
@@ -248,20 +254,83 @@ public class SalsaLogic extends Game
                     motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
                     motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
                     motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
-                    TimeUnit.SECONDS.sleep(1);
+                    //imeUnit.SECONDS.sleep(1);
                     gameOneInitial = true;
                 }
 //                TimeUnit.SECONDS.sleep(1);
             }
 
-        }
+//                int i = 0;
+//
+//                timeLit[i] = System.currentTimeMillis();
+//
+//                System.out.println("the current step: " + i);
+//
+//
+//                    System.out.println("print step one red ");
+//                    motoConnection.setTileColor(LED_COLOR_RED, bottomTile);
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+//        System.out.println("eeeeee ");
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+//                    //TimeUnit.SECONDS.sleep(1);
+//                    i++;
+//
+//                //Two - Left foot
+//                    System.out.println("print step 2 green ");
+//                    motoConnection.setTileColor(LED_COLOR_GREEN, thirdTop); //Left foot taps - GREEN - follow
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+//                    TimeUnit.SECONDS.sleep(1);
+//                    i++;
+//
+//                //Three - Right foot
+//                    System.out.println("print step 2 green ");
+//                    motoConnection.setTileColor(LED_COLOR_RED, secondTop); //Right foot - RED - follow
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+//                    TimeUnit.SECONDS.sleep(1);
+//                    i++;
+//
+//                //Five - Left foot
+//
+//                    motoConnection.setTileColor(LED_COLOR_GREEN, topTile); //Left foot - GREEN - follow
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+//                    TimeUnit.SECONDS.sleep(1);
+//                    i++;
+//
+//
+//                //Six - Right foot (tap again)
+//
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile); //Right foot - RED - follow
+//                    motoConnection.setTileColor(LED_COLOR_RED, secondTop);
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, thirdTop);
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+//                    TimeUnit.SECONDS.sleep(1);
+//                    i++;
+//
+//                //Seven - Left foot
+//
+//                    motoConnection.setTileColor(LED_COLOR_GREEN, thirdTop); //Left foot - RED - follow
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, secondTop);
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, bottomTile);
+//                    motoConnection.setTileIdle(LED_COLOR_OFF, topTile);
+//                    TimeUnit.SECONDS.sleep(1);
+//                    gameOneInitial = true;
+//                    i++;
+//                TimeUnit.SECONDS.sleep(1);
+
     }
 
     public void salsaBasicStep() {
 
         System.out.println(basicCounter % 6);
 
-        if (forward) {
+
             // One - Right foot
             if (basicCounter % 6 == 0) //Right foot - RED - follow
             {
@@ -323,7 +392,6 @@ public class SalsaLogic extends Game
             }
 
             basicCounter += 1;
-        }
     }
 
 
@@ -402,55 +470,16 @@ public class SalsaLogic extends Game
 // When the game starts what can be done is that the player hits the start button. The user stands in the starting tile for three seconds,
 // then the game actually starts when they hit the first count
 
-        public double pointSystem() {
+        public double pointSystem(double[] tlArray, double[] tsArray) {
 
             double [] points = new double[6];
 
-            //int numPractice = 5;
-            //int[][] scores = new int[6][numPractice]; // initialize the array to store scores
-
-
-                // Lighting the tiles according to FOLLOW steps
-
-                // The user is going to tap in the same tile with both feet, will have to let them know this in the instructions
-                // We won't use this time in the matrix
-//                motoConnection.setTileColorCountdown(LED_COLOR_VIOLET,thirdTop,this.GAME_SPEED); // Start - Both feet
-//                startingposition_lit = System.currentTimeMillis();
-//
-//                motoConnection.setTileColorCountdown(LED_COLOR_RED,bottomTile,this.GAME_SPEED); //ONE: Right foot - RED
-//                one_lit = System.currentTimeMillis();
-//
-//                motoConnection.setTileColorCountdown(LED_COLOR_GREEN,thirdTop,this.GAME_SPEED); //TWO: Left foot taps - GREEN
-//                two_lit = System.currentTimeMillis();
-//
-//                motoConnection.setTileColorCountdown(LED_COLOR_RED,secondTop,this.GAME_SPEED); //THREE: Right foot - RED
-//                three_lit = System.currentTimeMillis();
-//
-//                motoConnection.setTileColorCountdown(LED_COLOR_GREEN,topTile,this.GAME_SPEED); //FIVE: Left foot - GREEN
-//                five_lit = System.currentTimeMillis();
-//
-//                motoConnection.setTileColorCountdown(LED_COLOR_RED,secondTop,this.GAME_SPEED); //SIX: Right foot - RED  // TELL NIC OF THIS
-//                six_lit = System.currentTimeMillis();
-//
-//                motoConnection.setTileColorCountdown(LED_COLOR_GREEN,thirdTop,this.GAME_SPEED); //SEVEN: Left foot - GREEN
-//                seven_lit = System.currentTimeMillis();
-
-
-        /*
-        Ignore what I said below because it's a for loop
-        // Let's have them end on ONE - to signify the end
-        motoConnection.setTileColorCountdown(LED_COLOR_RED,bottomTile,this.GAME_SPEED); //ONE: Right foot - RED
-        one_lit = SystemSystem.nanoTime();
-        */
-
-                // Need to make an array to store the scores otherwise it'll override it.
-                // If not, can simply make it like this and then call the Point_system function three times from the Main or Salsa logic
 
                 double totalPoints = 0;
                 //int[] myIntArray = new int[practice*counts];
 
                 for(int i=0;i<6;i++) {
-                    totalPoints =+ (timeStep[i] - timeLit[i]) / GAME_SPEED;
+                    totalPoints =+ (tsArray[i] - tlArray[i]) / GAME_SPEED;
                 }
 
 //                player_delay_c1 = one_pressed - one_lit;

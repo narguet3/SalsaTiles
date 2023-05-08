@@ -135,68 +135,68 @@ public class GameActivity extends AppCompatActivity implements OnAntEventListene
         });
 
         // Displaying each colour for a certain period of time (default - 3000 ms)
-        Thread my_thread = new Thread()
-        {
-            int i = rounds - 1; // Loop variable
-
-            String end_message = "Game Over"; // This message is displayed at the end of the last round
-            int round = 1; // Stores the current round number
-
-            @Override
-            public void run()
-            {
-                try
-                {
-                    while (i >= 0)
-                    {
-                        //game_object.generateNextTile();
-                        Thread.sleep(delay);
-
-                        runOnUiThread(new Runnable()
-                        {
-
-                            @Override
-                            public void run()
-                            {
-                                if (i >= 0)
-                                {
-                                    connection.setAllTilesIdle(AntData.LED_COLOR_OFF);
-                                    //game_object.generateNextTile();
-                                    //hit_color.setText(colorNames.get(game_object.r_color)); // Updating and displaying a new colour
-                                    //game_object.generateNextTile(); // Updating the colour of the Moto tiles
-                                    //game_round.setText(toString().valueOf(round)); // Updating and displaying a new colour
-                                    round++;
-                                }
-                                else
-                                {
-                                    Timer timer_object  = new Timer(); // Object of the Timer Class
-
-                                    // Displaying the end game message
-                                    timer_object.schedule(new TimerTask()
-                                    {
-                                        @Override
-                                        public void run()
-                                        {
-                                            finish();
-                                        }
-                                    }, 5000);
-
-                                    //hit_color.setText(end_message);
-                                    game_object.onGameEnd();
-                                }
-                                i--;
-                            }
-                        });
-                    }
-                }
-                catch (InterruptedException e)
-                {
-
-                }
-            }
-        };
-
-        my_thread.start();
+//        Thread my_thread = new Thread()
+//        {
+//            int i = rounds - 1; // Loop variable
+//
+//            String end_message = "Game Over"; // This message is displayed at the end of the last round
+//            int round = 1; // Stores the current round number
+//
+//            @Override
+//            public void run()
+//            {
+//                try
+//                {
+//                    while (i >= 0)
+//                    {
+//                        //game_object.generateNextTile();
+//                        Thread.sleep(delay);
+//
+//                        runOnUiThread(new Runnable()
+//                        {
+//
+//                            @Override
+//                            public void run()
+//                            {
+//                                if (i >= 0)
+//                                {
+//                                    connection.setAllTilesIdle(AntData.LED_COLOR_OFF);
+//                                    //game_object.generateNextTile();
+//                                    //hit_color.setText(colorNames.get(game_object.r_color)); // Updating and displaying a new colour
+//                                    //game_object.generateNextTile(); // Updating the colour of the Moto tiles
+//                                    //game_round.setText(toString().valueOf(round)); // Updating and displaying a new colour
+//                                    round++;
+//                                }
+//                                else
+//                                {
+//                                    Timer timer_object  = new Timer(); // Object of the Timer Class
+//
+//                                    // Displaying the end game message
+//                                    timer_object.schedule(new TimerTask()
+//                                    {
+//                                        @Override
+//                                        public void run()
+//                                        {
+//                                            finish();
+//                                        }
+//                                    }, 5000);
+//
+//                                    //hit_color.setText(end_message);
+//                                    game_object.onGameEnd();
+//                                }
+//                                i--;
+//                            }
+//                        });
+//                    }
+//                }
+//                catch (InterruptedException e)
+//                {
+//
+//                }
+//            }
+//        };
+//
+//        my_thread.start();
 
 
     }
